@@ -1,12 +1,21 @@
+import { useState } from "react"
 import Header from "./components/Header"
 import ProductsList from "./components/ProductsList"
 
 function App() {
 
+  const [cartProducts, setCartProducts] = useState([])
+
+  const addProductToCart = (cartProducts) => {
+    setCartProducts(prevProduct => {
+      return [...prevProduct, cartProducts]
+    })
+  }
+
   return (
     <>
-      <Header />
-      <ProductsList  />
+      <Header cartProducts={cartProducts} />
+      <ProductsList addProductToCart={addProductToCart} />
     </>
   )
 }

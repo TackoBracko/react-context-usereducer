@@ -1,17 +1,18 @@
-export default function Product(props) {
+export default function Product({image, title, price, description, addProductToCart}) {
+
     return (
         <div className="product">
-            <img src={props.image} />
+            <img src={image} />
 
             <div className="product-content">
                 <div>
-                    <h3>{props.title}</h3>
-                    <p className="product-price">${props.price}</p>
-                    <p>{props.description}</p>
+                    <h3>{title}</h3>
+                    <p className="product-price">${price}</p>
+                    <p>{description}</p>
                 </div>
 
                 <div className="product-actions">
-                    <button>Add to Cart</button>
+                    <button onClick={addProductToCart} >Add to Cart</button>
                 </div>
 
             </div>
