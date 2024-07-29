@@ -1,16 +1,11 @@
-import { useState } from "react"
+import { createContext, useState } from "react"
 import Header from "./components/Header"
 import ProductsList from "./components/ProductsList"
 
+export const CartContext = createContext()
+
 function App() {
-
   const [cartProducts, setCartProducts] = useState([])
-
-  /*const addProductToCart = (cartProducts) => {
-    setCartProducts(prevProduct => {
-      return [...prevProduct, cartProducts]
-    })
-  }*/
 
   const addProductToCart = (product) => {
     const isItemInCart = cartProducts.find((cartProduct) => cartProduct.id === product.id)
@@ -39,11 +34,12 @@ function App() {
   }
 
   return (
-    <>
-      <Header cartProducts={cartProducts} addProductToCart={addProductToCart} removeProductFromCart={removeProductFromCart} />
-      <ProductsList addProductToCart={addProductToCart} />
-    </>
+    <CartContext.Provider value={{cartProducts, addProductToCart, removeProductFromCart}}>
+      <Header />
+      <ProductsList />
+    </CartContext.Provider>
   )
+
 }
 
 export default App

@@ -1,17 +1,21 @@
-export default function ProductCart({cartProducts, addProductToCart, removeProductFromCart }) {
+import { useContext } from "react"
+import { CartContext } from "../App"
+
+export default function ProductCart() {
+    const cartContext = useContext(CartContext)
     
-    const totalOfProducts = cartProducts.reduce(
-        (accumulator, currentValue) => accumulator + currentValue.price * currentValue.quantity, 0
+    const totalOfProducts = cartContext.cartProducts.reduce(
+        (total, item) => total + item.price * item.quantity, 0
     ).toFixed(2)
 
     return (
         <div className="cart">
             <h2>Your Cart</h2>
 
-                {cartProducts.length === 0 ? <p>No items in cart</p> : 
+                {cartContext.cartProducts.length === 0 ? <p>No items in cart</p> : 
 
                     <ul className="cart-items">
-                        {cartProducts.map((product) =>
+                        {cartContext.cartProducts.map((product) =>
                             <li key={product.id}>
                                 <div>
                                     <p>{product.title}</p>
@@ -19,9 +23,9 @@ export default function ProductCart({cartProducts, addProductToCart, removeProdu
                                 </div>
 
                                 <div className="cart-item-actions">
-                                    <button onClick={() => removeProductFromCart(product)}>-</button>
+                                    <button onClick={() => cartContext.removeProductFromCart(product)}>-</button>
                                     <span>{product.quantity}</span>
-                                    <button onClick={() => addProductToCart(product)}>+</button>
+                                    <button onClick={() => cartContext.addProductToCart(product)}>+</button>
                                 </div>
                             </li>
                         )}
