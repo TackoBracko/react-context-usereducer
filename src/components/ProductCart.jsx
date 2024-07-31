@@ -1,10 +1,12 @@
 import { useContext } from "react"
-import { CartContext } from "../App"
+import { Context } from "./Context"
 
 export default function ProductCart() {
-    const cartContext = useContext(CartContext)
-    
-    const totalOfProducts = cartContext.cartProducts.reduce(
+
+    //const context = useContext(Context)
+    const {cartProducts, addProductToCart, removeProductFromCart} = useContext(Context)
+
+    const totalOfProducts = cartProducts.reduce(
         (total, item) => total + item.price * item.quantity, 0
     ).toFixed(2)
 
@@ -12,10 +14,10 @@ export default function ProductCart() {
         <div className="cart">
             <h2>Your Cart</h2>
 
-                {cartContext.cartProducts.length === 0 ? <p>No items in cart</p> : 
+                {cartProducts.length === 0 ? <p>No items in cart</p> : 
 
                     <ul className="cart-items">
-                        {cartContext.cartProducts.map((product) =>
+                        {cartProducts.map((product) =>
                             <li key={product.id}>
                                 <div>
                                     <p>{product.title}</p>
@@ -23,9 +25,9 @@ export default function ProductCart() {
                                 </div>
 
                                 <div className="cart-item-actions">
-                                    <button onClick={() => cartContext.removeProductFromCart(product)}>-</button>
+                                    <button onClick={() => removeProductFromCart(product)}>-</button>
                                     <span>{product.quantity}</span>
-                                    <button onClick={() => cartContext.addProductToCart(product)}>+</button>
+                                    <button onClick={() => addProductToCart(product)}>+</button>
                                 </div>
                             </li>
                         )}

@@ -1,7 +1,7 @@
 import { forwardRef, useImperativeHandle, useRef } from "react"
 import ProductCart from "./ProductCart.jsx"
 
-const Modal = forwardRef(function Modal({cartProducts, addProductToCart, removeProductFromCart}, ref) {
+const Modal = forwardRef(function Modal({},ref) {
 
     const dialog = useRef()
 
@@ -16,7 +16,7 @@ const Modal = forwardRef(function Modal({cartProducts, addProductToCart, removeP
     return (
         <dialog ref={dialog} className="modal">
 
-            <ProductCart cartProducts={cartProducts} addProductToCart={addProductToCart} removeProductFromCart={removeProductFromCart} />
+            <ProductCart />
 
             <form method="dialog" className="modal-actions">
                 <button>Close</button>

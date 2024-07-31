@@ -1,12 +1,13 @@
 import { useContext, useRef } from 'react'
 import logo from '../assets/logo.png'
 import Modal from './Modal'
-import { CartContext } from '../App'
+import { Context } from './Context'
 
-export default function Header({ cartProducts, addProductToCart, removeProductFromCart }) {
-  const cartContext = useContext(CartContext)
-
+export default function Header() {
   const dialog = useRef()
+  
+  //const context = useContext(Context)
+  const {cartProducts} = useContext(Context)
 
   const handleOpenModal = () => {
     dialog.current.open()
@@ -14,17 +15,19 @@ export default function Header({ cartProducts, addProductToCart, removeProductFr
   
   return (
     <>
-      <Modal ref={dialog} cartProducts={cartProducts} addProductToCart={addProductToCart} removeProductFromCart={removeProductFromCart}  />
+      <Modal ref={dialog} />
 
       <header className="main-header">
+        
         <div className="main-title">
           <img src={logo} className="main-img" />
           <h1>Elegant Context</h1>
         </div>
 
         <button className="main-header-button" onClick={handleOpenModal}>
-          Cart <span>({cartContext.cartProducts.length})</span>
+          Cart <span>({cartProducts.length})</span>
         </button>
+
       </header>
     </>
   )

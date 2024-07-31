@@ -1,10 +1,12 @@
-import { DUMMY_PRODUCTS } from "../dummy-products";
-import Product from "./Product";
-import { CartContext } from "../App";
-import { useContext } from "react";
+import { DUMMY_PRODUCTS } from "../dummy-products"
+import Product from "./Product"
+import { Context } from "./Context"
+import { useContext } from "react"
 
 export default function ProductsList() {
-  const cartContext = useContext(CartContext)
+  
+  //const context = useContext(Context)
+  const {addProductToCart} = useContext(Context)
 
   return (
     <div className="shop">
@@ -12,16 +14,16 @@ export default function ProductsList() {
       
       <ul className="products">
         {DUMMY_PRODUCTS.map((product) => (
-            <li key={product.id}>
-              <Product 
-                image={product.image}
-                title={product.title}
-                price={product.price}
-                description={product.description}
-                addProductToCart={() => cartContext.addProductToCart(product)}
-              />
-            </li>
-          ))}
+          <li key={product.id}>
+            <Product 
+              image={product.image}
+              title={product.title}
+              price={product.price}
+              description={product.description}
+              addProductToCart={() => addProductToCart(product)}
+            />
+          </li>
+        ))}
       </ul>
     </div>
   )
