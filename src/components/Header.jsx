@@ -7,7 +7,7 @@ export default function Header() {
   const dialog = useRef()
   
   //const context = useContext(Context)
-  const {cartProducts} = useContext(Context)
+  const{cartProducts} = useContext(Context)
 
   const handleOpenModal = () => {
     dialog.current.open()

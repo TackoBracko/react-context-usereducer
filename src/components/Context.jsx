@@ -1,12 +1,50 @@
-import { createContext, useState } from "react"
+import { createContext, useReducer} from "react"
 
 export const Context = createContext()
 
+const cartReducer = (state, action) => {
+    if (action.type === 'ADD_PRODUCT') {
+        const isItemInCart = state.find((cartProduct) => cartProduct.id === action.payload.id)
+
+        if (isItemInCart) {
+            return (
+                state.map((cartProduct) => cartProduct.id === action.payload.id 
+                ? {...cartProduct, quantity: cartProduct.quantity + 1} : cartProduct)
+            )
+        } else {
+            return ([...state, {...action.payload, quantity: 1}])
+        }
+    }
+
+    if (action.type === 'REMOVE_PRODUCT') {
+        const isItemInCart = state.find((cartProduct) => cartProduct.id === action.payload.id)
+
+        if (isItemInCart.quantity === 1) {
+            return (state.filter((cartProduct) => cartProduct.id !== action.payload.id))
+        } else {
+            return(
+                state.map((cartProduct) => cartProduct.id === action.payload.id 
+                ? {...cartProduct, quantity: cartProduct.quantity - 1 } : cartProduct)
+            )
+        }
+    }
+
+    return state
+}
+
 export const CartContextProvider = ({ children}) => { 
-    const [cartProducts, setCartProducts] = useState([])
+    //const [cartProducts, setCartProducts] = useState([])
+    const [cartProducts, dispatch] = useReducer(cartReducer, [])
+
 
     const addProductToCart = (product) => {
-        const isItemInCart = cartProducts.find((cartProduct) => cartProduct.id === product.id)
+
+        dispatch({
+            type: 'ADD_PRODUCT',
+            payload: product
+        })
+
+        /*const isItemInCart = cartProducts.find((cartProduct) => cartProduct.id === product.id)
 
         if (isItemInCart) {
             setCartProducts(
@@ -15,11 +53,17 @@ export const CartContextProvider = ({ children}) => {
             )
         } else {
             setCartProducts([...cartProducts, {...product, quantity: 1}])
-        }
+        }*/
     }
 
     const removeProductFromCart = (product) => {
-        const isItemInCart = cartProducts.find((cartProduct) => cartProduct.id === product.id)
+
+        dispatch({
+            type: 'REMOVE_PRODUCT',
+            payload: product
+        })
+
+        /*const isItemInCart = cartProducts.find((cartProduct) => cartProduct.id === product.id)
 
         if (isItemInCart.quantity === 1) {
             setCartProducts(cartProducts.filter((cartProduct) => cartProduct.id !== product.id))
@@ -28,7 +72,7 @@ export const CartContextProvider = ({ children}) => {
                 cartProducts.map((cartProduct) => cartProduct.id === product.id 
                 ? {...cartProduct, quantity: cartProduct.quantity - 1 } : cartProduct)
             )
-        }
+        }*/
     }
 
     return (
