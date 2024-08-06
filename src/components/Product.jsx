@@ -1,4 +1,4 @@
-export default function Product({image, title, price, description, addProductToCart}) {
+export default function Product({image, title, price, description, addProductToCart, consoleDescription, decrementProduct}) {
 
     return (
         <div className="product">
@@ -13,6 +13,14 @@ export default function Product({image, title, price, description, addProductToC
 
                 <div className="product-actions">
                     <button onClick={addProductToCart} >Add to Cart</button>
+                </div>
+
+                <div className="product-actions">
+                    <button onClick={consoleDescription}>Console log</button>
+                </div>
+
+                <div className="product-actions">
+                    <button onClick={decrementProduct}>Decrement</button>
                 </div>
 
             </div>

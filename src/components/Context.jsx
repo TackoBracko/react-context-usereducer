@@ -9,7 +9,7 @@ const cartReducer = (state, action) => {
         if (isItemInCart) {
             return (
                 state.map((cartProduct) => cartProduct.id === action.payload.id 
-                ? {...cartProduct, quantity: cartProduct.quantity + 1} : cartProduct)
+                ? {...cartProduct, quantity: cartProduct.quantity + 1} : cartProduct )
             )
         } else {
             return ([...state, {...action.payload, quantity: 1}])
@@ -24,9 +24,22 @@ const cartReducer = (state, action) => {
         } else {
             return(
                 state.map((cartProduct) => cartProduct.id === action.payload.id 
-                ? {...cartProduct, quantity: cartProduct.quantity - 1 } : cartProduct)
+                ? {...cartProduct, quantity: cartProduct.quantity - 1 } : cartProduct )
             )
         }
+    }
+
+    if (action.type === 'CONSOLE_PRODUCT') {
+       console.log(action.payload.title, action.payload.price) 
+
+       return state
+    } 
+
+    if (action.type === 'DECREMENT_PRODUCT') {
+        return (
+            state.map((cartProduct) => cartProduct.id === action.payload.id 
+            ? {...cartProduct, quantity: cartProduct.quantity - 1} : cartProduct )
+        )
     }
 
     return state
@@ -75,8 +88,22 @@ export const CartContextProvider = ({ children}) => {
         }*/
     }
 
+    const consoleDescription = (product) => {
+        dispatch({
+            type: 'CONSOLE_PRODUCT',
+            payload: product
+        })
+    }
+
+    const decrementProduct = (product) => {
+        dispatch ({
+            type: 'DECREMENT_PRODUCT',
+            payload: product
+        })
+    }
+
     return (
-        <Context.Provider value={{cartProducts, addProductToCart, removeProductFromCart}}>
+        <Context.Provider value={{cartProducts, addProductToCart, removeProductFromCart, consoleDescription, decrementProduct}}>
             {children}
         </Context.Provider>
     )

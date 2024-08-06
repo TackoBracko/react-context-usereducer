@@ -6,7 +6,7 @@ import { useContext } from "react"
 export default function ProductsList() {
   
   //const context = useContext(Context)
-  const {addProductToCart} = useContext(Context)
+  const {addProductToCart, consoleDescription, decrementProduct} = useContext(Context)
 
   return (
     <div className="shop">
@@ -21,6 +21,8 @@ export default function ProductsList() {
               price={product.price}
               description={product.description}
               addProductToCart={() => addProductToCart(product)}
+              consoleDescription={() => consoleDescription(product)}
+              decrementProduct={() => decrementProduct(product)}
             />
           </li>
         ))}
