@@ -42,6 +42,13 @@ const cartReducer = (state, action) => {
         )
     }
 
+    if (action.type === 'INCREASE_PRODUCT') {
+        return (
+            state.map((cartProduct) => cartProduct.id === action.payload.id 
+            ? {...cartProduct, quantity: cartProduct.quantity + 1} : cartProduct )
+        )
+    }
+
     return state
 }
 
@@ -102,8 +109,15 @@ export const CartContextProvider = ({ children}) => {
         })
     }
 
+    const increaseProduct = (product) => {
+        dispatch ({
+            type: 'INCREASE_PRODUCT',
+            payload: product
+        })
+    }
+
     return (
-        <Context.Provider value={{cartProducts, addProductToCart, removeProductFromCart, consoleDescription, decrementProduct}}>
+        <Context.Provider value={{cartProducts, addProductToCart, removeProductFromCart, consoleDescription, decrementProduct, increaseProduct}}>
             {children}
         </Context.Provider>
     )
